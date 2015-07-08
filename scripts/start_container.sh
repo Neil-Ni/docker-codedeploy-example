@@ -2,4 +2,4 @@
 
 set -e
 
-cd ../ && docker-compose up
+cd ../ && /usr/local/bin/docker-compose up
