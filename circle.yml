@@ -1,32 +1,15 @@
-general:
-  artifacts:
-    - docker
-
 machine:
   services:
     - docker
 
 dependencies:
-  cache_directories:
-    - ~/docker
   override:
-    - docker info
-    - if [[ -e ~/docker/builder.tar ]]; then docker load --input ~/docker/builder.tar; fi
-    - docker build -t middleman-builder .
-    - docker run --name middleman-builder middleman-builder
-    - docker cp middleman-builder:/app/build.tar.gz ./images/nginx
-    - docker build -t middleman images/nginx
-    - docker save middleman | gzip -c > docker/middleman_docker_image.tar.gz
-    - mkdir -p ~/docker; docker save middleman-builder > ~/docker/builder.tar
-    - docker images
+    - sudo pip install -U docker-compose
 
 test:
   override:
-    - echo 'No tests :('
-
-compile:
-  override:
-    - echo 'Do not run bundle exec middleman build!'
+    - docker-compose run -d --no-deps node1
+    - cd node; mocha
 
 deployment:
   staging:
