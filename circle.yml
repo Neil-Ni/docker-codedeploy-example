@@ -29,16 +29,15 @@ compile:
     - echo 'Do not run bundle exec middleman build!'
 
 deployment:
-  aws:
+  staging:
     branch: master
     codedeploy:
-      middleman:
+      docker-test:
         application_root: /
+        region: us-east-1
         revision_location:
           revision_type: S3
           s3_location:
-            bucket: andyshinn-middleman
-            key_pattern: middleman-{SHORT_COMMIT}-{BUILD_NUM}.tar.gz
-        region: us-west-2
-        deployment_group: middleman
-        deployment_config: CodeDeployDefault.OneAtATime
+            bucket: docker-test-bucket-neilni
+            key_pattern: docker-test-bucket-neilni-{BRANCH}-{SHORT_COMMIT}
+        deployment_group: docker-test-gp
