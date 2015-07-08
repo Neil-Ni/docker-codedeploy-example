@@ -2,10 +2,6 @@ machine:
   services:
     - docker
 
-dependencies:
-  override:
-    - sudo pip install -U docker-compose
-
 test:
   override:
     - cd node; mocha
@@ -22,4 +18,4 @@ deployment:
           s3_location:
             bucket: docker-test-bucket-neilni
             key_pattern: docker-test-bucket-neilni-{BRANCH}-{SHORT_COMMIT}
-        deployment_group: docker-test-gp
+        deployment_group: docker-compose-test
